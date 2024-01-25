@@ -1,0 +1,92 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.4.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "08b1b84"
+  },
+  "schemaVersion": 14,
+  "id": "Form_Registration",
+  "components": [
+    {
+      "text": "## Registration Form",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_1ai6u5z",
+        "columns": null
+      },
+      "id": "Field_08w00iq"
+    },
+    {
+      "label": "First Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0azklzo",
+        "columns": null
+      },
+      "id": "Field_0y07a2l",
+      "key": "textfield_FirstName",
+      "validate": {
+        "required": true,
+        "minLength": 3,
+        "maxLength": 30
+      }
+    },
+    {
+      "label": "Middle Name (s)",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0azklzo",
+        "columns": null
+      },
+      "id": "Field_0qwft9k",
+      "key": "textfield_MiddleName",
+      "validate": {
+        "minLength": 3,
+        "maxLength": 30
+      }
+    },
+    {
+      "label": "Last Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1dvt2ft",
+        "columns": null
+      },
+      "id": "Field_138myrw",
+      "key": "textfield_LastName",
+      "validate": {
+        "minLength": 3,
+        "maxLength": 30,
+        "required": true
+      }
+    },
+    {
+      "label": "Email Address",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1cp4c4h",
+        "columns": null
+      },
+      "id": "Field_1b9jz0z",
+      "key": "textfield_emailAddress",
+      "validate": {
+        "required": true,
+        "validationType": "email"
+      }
+    },
+    {
+      "text": "An email with a validation link will be sent",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_1xqswyo",
+        "columns": null
+      },
+      "id": "Field_1wprvj2",
+      "properties": { }
+    }
+  ],
+  "type": "default"
+}

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="e414032" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0" camunda:diagramRelationId="52ad9110-7d1d-4d75-b24f-028d66c884db">
+  <bpmn:process id="Process_RegistrationProcess" name="Registration Process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_RegistrationInitiated" name="Registration Initiated">
+      <bpmn:outgoing>Flow_1ls2rx5</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1ls2rx5" sourceRef="StartEvent_RegistrationInitiated" targetRef="UserTask_GetRegistrationDetails" />
+    <bpmn:userTask id="UserTask_GetRegistrationDetails" name="Get registration details">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formId="Form_Registration" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=textfield_FirstName" target="firstName" />
+          <zeebe:output source="=textfield_MiddleName" target="middleName" />
+          <zeebe:output source="=textfield_LastName" target="lastName" />
+          <zeebe:output source="=textfield_emailAddress" target="emailAddress" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ls2rx5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0s2p239</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0s2p239" sourceRef="UserTask_GetRegistrationDetails" targetRef="Activity_SendVerificationEmail" />
+    <bpmn:sendTask id="Activity_SendVerificationEmail" name="Send verification email">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="SendVerificationEmail" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0s2p239</bpmn:incoming>
+      <bpmn:outgoing>Flow_1nnx6rm</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="EndEvent_VerificationEmailSent" name="Verification email sent">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_1nnx6rm</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1nnx6rm" sourceRef="Activity_SendVerificationEmail" targetRef="EndEvent_VerificationEmailSent" />
+    <bpmn:boundaryEvent id="Event_GetRegistrationDetailsTimeout" attachedToRef="UserTask_GetRegistrationDetails">
+      <bpmn:outgoing>Flow_05f94sj</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_03ydw1x">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT5M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:endEvent id="EndEvent_RegistrationCancelled" name="Registration cancelled">
+      <bpmn:incoming>Flow_05f94sj</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_05f94sj" name="5 minutes" sourceRef="Event_GetRegistrationDetailsTimeout" targetRef="EndEvent_RegistrationCancelled" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_RegistrationProcess">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_RegistrationInitiated">
+        <dc:Bounds x="150" y="100" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="139" y="143" width="59" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18bdx9x_di" bpmnElement="UserTask_GetRegistrationDetails">
+        <dc:Bounds x="240" y="78" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xfwpcw_di" bpmnElement="Activity_SendVerificationEmail">
+        <dc:Bounds x="400" y="78" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_073dn9r_di" bpmnElement="EndEvent_VerificationEmailSent">
+        <dc:Bounds x="562" y="100" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="539" y="143" width="83" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0g30tq8_di" bpmnElement="EndEvent_RegistrationCancelled">
+        <dc:Bounds x="342" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="331" y="265" width="59" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1p3tzsp_di" bpmnElement="Event_GetRegistrationDetailsTimeout">
+        <dc:Bounds x="272" y="140" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="237" y="183" width="76" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ls2rx5_di" bpmnElement="Flow_1ls2rx5" bioc:stroke="#22242a" bioc:fill="#22242a">
+        <di:waypoint x="186" y="118" />
+        <di:waypoint x="240" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0s2p239_di" bpmnElement="Flow_0s2p239" bioc:stroke="#22242a" bioc:fill="#22242a">
+        <di:waypoint x="340" y="118" />
+        <di:waypoint x="400" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nnx6rm_di" bpmnElement="Flow_1nnx6rm" bioc:stroke="#22242a" bioc:fill="#22242a">
+        <di:waypoint x="500" y="118" />
+        <di:waypoint x="562" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05f94sj_di" bpmnElement="Flow_05f94sj" bioc:stroke="#22242a" bioc:fill="#22242a">
+        <di:waypoint x="290" y="176" />
+        <di:waypoint x="290" y="240" />
+        <di:waypoint x="342" y="240" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="305" y="193" width="49" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
