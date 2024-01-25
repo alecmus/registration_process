@@ -40,6 +40,13 @@
             <artifactId>reactor-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>io.camunda</groupId>
+            <artifactId>zeebe-process-test-extension</artifactId>
+            <version>${zeebe.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
